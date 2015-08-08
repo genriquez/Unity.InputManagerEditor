@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="libs/js-yaml-3.3.1.js"></script>		
+		<script src="libs/angular-1.4.3.js"></script>		
+		<script src="uime.js"></script>
+	</head>
+	<body data-ng-app="UIME">
+		<div data-ng-controller="SelectSourceController">
+			<input type="file" data-uime-file-contents-loaded="onSourceLoad" />
+			
+			<p data-ng-bind="source"></p>
+		</div>
+	</body>
+</html>
