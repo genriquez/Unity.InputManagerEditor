@@ -6,10 +6,88 @@
 		<script src="uime.js"></script>
 	</head>
 	<body data-ng-app="UIME">
-		<div data-ng-controller="SelectSourceController">
-			<input type="file" data-uime-file-contents-loaded="onSourceLoad" />
+		<div data-ng-controller="ImportExportBindingsController">
+			<button ng-click="exportBindings()">Export</button>
 			
-			<p data-ng-bind="source"></p>
+			<input type="file" data-uime-file-contents-loaded="onSourceLoad" />
 		</div>
+		
+		<div data-ng-controller="TabsController" data-default-tab="Raw">
+			<a href="#1" data-ng-click="switchTab('Controller1')">Controller 1</a>
+			<a href="#2" data-ng-click="switchTab('Controller2')">Controller 2</a>
+			<a href="#3" data-ng-click="switchTab('Controller3')">Controller 3</a>
+			<a href="#4" data-ng-click="switchTab('Controller4')">Controller 4</a>
+			<a href="#O" data-ng-click="switchTab('Other')">Other</a>
+			<a href="#R" data-ng-click="switchTab('Raw')">Raw</a>
+			
+			<div data-ng-if="currentTab === 'Controller1'">
+				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="1" data-uime-embed-view="#EditGroupedBindings"></div>
+			</div>
+			
+			<div data-ng-if="currentTab === 'Controller2'">
+				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="2" data-uime-embed-view="#EditGroupedBindings"></div>
+			</div>
+			
+			<div data-ng-if="currentTab === 'Controller3'">
+				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="3" data-uime-embed-view="#EditGroupedBindings"></div>
+			</div>
+			
+			<div data-ng-if="currentTab === 'Controller4'">
+				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="4" data-uime-embed-view="#EditGroupedBindings"></div>
+			</div>
+			
+			<div data-ng-if="currentTab === 'Other'">
+				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="0" data-uime-embed-view="#EditGroupedBindings"></div>
+			</div>
+			
+			<div data-ng-if="currentTab === 'Raw'">
+				<div data-ng-controller="EditRawBindingsController" data-uime-embed-view="#EditRawBindings"></div>
+			</div>
+		</div>
+
+
+		<!-- Embeded views -->
+		<script id="EditRawBindings" type="text/html">
+			<table>
+				<thead>
+					<tr>
+						<th ng-repeat="f in fields" ng-bind="f.name"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="b in bindings track by $index">
+						<td ng-repeat="f in fields"><input type="{{f.fieldType}}" ng-model="b[f.field]" data-uime-converter="f.converter" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</script>
+		
+		<script id="EditGroupedBindings" type="text/html">
+			<table>
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Binding</th>
+						<th>Invert</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="b in bindings track by $index">
+						<td><input type="text" ng-model="b.m_Name" /></td>
+						<td><input type="text" ng-model="b.descriptiveName" /></td>
+						<td>
+							<select ng-model="b.type" ng-options="inputTypeNames[t] for t in inputTypeIds" data-uime-converter="{ model: 'number' }"></select>
+							
+							<input ng-if="b.type == 2" type="number" min="0" ng-model="b.axis" />
+							<input ng-if="b.type != 2" type="text" ng-model="b.positiveButton" />
+						</td>
+						<td>
+							<input type="checkbox" ng-model="b.invert"  data-uime-converter="{ model: 'binary', binding: 'boolean' }"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</script>
 	</body>
 </html>

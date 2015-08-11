@@ -5,13 +5,38 @@
 	loadComponent("uime.app");
 	
 	// Directives
-	loadComponent("Directives/uime.FileContentsLoaded");
+	loadDirective("FileContentsLoaded");
+	loadDirective("EmbedView");
+	loadDirective("Converters");
 	
 	// Services
-	loadComponent("Services/uime.YamlConverter");
+	loadService("YamlConverter");
+	loadService("ControllerBindings");
+	
+	// Controllers
+	loadController("TabsController");
 	
 	// Modules
-	loadComponent("Modules/SelectSource/uime.SelectSourceCtrl");
+	loadModuleComponent("ImportExportBindings", "ImportExportBindingsController");
+	loadModuleComponent("EditBindings", "EditRawBindingsController");
+	loadModuleComponent("EditBindings", "EditGroupedBindingsController");
+	
+	// Load functions
+	function loadModuleComponent(moduleName, componentName) {
+		loadComponent("Modules/" + moduleName + "/uime." + componentName);
+	}
+	
+	function loadController(controllerName) {
+		loadComponent("Controllers/uime." + controllerName);
+	}
+	
+	function loadDirective(directiveName) {
+		loadComponent("Directives/uime." + directiveName);
+	}
+	
+	function loadService(serviceName) {
+		loadComponent("Services/uime." + serviceName);
+	}
 	
 	function loadComponent(jsName) {
 		var scriptEl = "<script src=\"scripts/" + jsName + ".js\"></script>";
