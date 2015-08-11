@@ -5,7 +5,7 @@
 	loadComponent("uime.app");
 	
 	// Directives
-	loadDirective("FileContentsLoaded");
+	loadDirective("OpenFile");
 	loadDirective("EmbedView");
 	loadDirective("Converters");
 	

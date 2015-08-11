@@ -1,54 +1,65 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="styles/uime.css" />
+		
 		<script src="libs/js-yaml-3.3.1.js"></script>		
 		<script src="libs/angular-1.4.3.js"></script>		
 		<script src="uime.js"></script>
 	</head>
 	<body data-ng-app="UIME">
-		<div data-ng-controller="ImportExportBindingsController">
-			<button ng-click="exportBindings()">Export</button>
+		<header class="page-content">
+			<h1>INPUT MANAGER EDITOR</h1>
 			
-			<input type="file" data-uime-file-contents-loaded="onSourceLoad" />
-		</div>
+			<div class="import-export-header" data-ng-controller="ImportExportBindingsController">
+				<button ng-click="exportBindings()">Export</button>
+				<uime-open-file caption="Import" onload="onSourceLoad"></uime-open-file>
+			</div>
+		</header>
 		
 		<div data-ng-controller="TabsController" data-default-tab="Raw">
-			<a href="#1" data-ng-click="switchTab('Controller1')">Controller 1</a>
-			<a href="#2" data-ng-click="switchTab('Controller2')">Controller 2</a>
-			<a href="#3" data-ng-click="switchTab('Controller3')">Controller 3</a>
-			<a href="#4" data-ng-click="switchTab('Controller4')">Controller 4</a>
-			<a href="#O" data-ng-click="switchTab('Other')">Other</a>
-			<a href="#R" data-ng-click="switchTab('Raw')">Raw</a>
-			
-			<div data-ng-if="currentTab === 'Controller1'">
-				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="1" data-uime-embed-view="#EditGroupedBindings"></div>
+			<div class="tab-bar">
+				<div class="page-content">
+					<a class="tab-button" data-ng-click="switchTab('Controller1')" data-ng-class="{ 'tab-active': currentTab == 'Controller1' }">Controller 1</a>
+					<a class="tab-button" data-ng-click="switchTab('Controller2')" data-ng-class="{ 'tab-active': currentTab == 'Controller2' }">Controller 2</a>
+					<a class="tab-button" data-ng-click="switchTab('Controller3')" data-ng-class="{ 'tab-active': currentTab == 'Controller3' }">Controller 3</a>
+					<a class="tab-button" data-ng-click="switchTab('Controller4')" data-ng-class="{ 'tab-active': currentTab == 'Controller4' }">Controller 4</a>
+					<a class="tab-button" data-ng-click="switchTab('Other')" data-ng-class="{ 'tab-active': currentTab == 'Other' }">Other</a>
+					<a class="tab-button tab-special" data-ng-click="switchTab('Raw')" data-ng-class="{ 'tab-active': currentTab == 'Raw' }">Raw</a>
+				</div>
 			</div>
 			
-			<div data-ng-if="currentTab === 'Controller2'">
-				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="2" data-uime-embed-view="#EditGroupedBindings"></div>
-			</div>
-			
-			<div data-ng-if="currentTab === 'Controller3'">
-				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="3" data-uime-embed-view="#EditGroupedBindings"></div>
-			</div>
-			
-			<div data-ng-if="currentTab === 'Controller4'">
-				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="4" data-uime-embed-view="#EditGroupedBindings"></div>
-			</div>
-			
-			<div data-ng-if="currentTab === 'Other'">
-				<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="0" data-uime-embed-view="#EditGroupedBindings"></div>
-			</div>
-			
-			<div data-ng-if="currentTab === 'Raw'">
-				<div data-ng-controller="EditRawBindingsController" data-uime-embed-view="#EditRawBindings"></div>
+			<div class="page-content">
+				<div data-ng-if="currentTab === 'Controller1'">
+					<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="1" data-uime-embed-view="#EditGroupedBindings"></div>
+				</div>
+				
+				<div data-ng-if="currentTab === 'Controller2'">
+					<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="2" data-uime-embed-view="#EditGroupedBindings"></div>
+				</div>
+				
+				<div data-ng-if="currentTab === 'Controller3'">
+					<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="3" data-uime-embed-view="#EditGroupedBindings"></div>
+				</div>
+				
+				<div data-ng-if="currentTab === 'Controller4'">
+					<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="4" data-uime-embed-view="#EditGroupedBindings"></div>
+				</div>
+				
+				<div data-ng-if="currentTab === 'Other'">
+					<div data-ng-controller="EditGroupedBindingsController" data-joystick-group="0" data-uime-embed-view="#EditGroupedBindings"></div>
+				</div>
+				
+				<div data-ng-if="currentTab === 'Raw'">
+					<div data-ng-controller="EditRawBindingsController" data-uime-embed-view="#EditRawBindings"></div>
+				</div>
 			</div>
 		</div>
 
 
 		<!-- Embeded views -->
 		<script id="EditRawBindings" type="text/html">
-			<table>
+			<table class="bindings">
 				<thead>
 					<tr>
 						<th ng-repeat="f in fields" ng-bind="f.name"></th>
@@ -56,14 +67,14 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="b in bindings track by $index">
-						<td ng-repeat="f in fields"><input type="{{f.fieldType}}" ng-model="b[f.field]" data-uime-converter="f.converter" /></td>
+						<td class="cell-{{f.fieldType}}" ng-repeat="f in fields"><input type="{{f.fieldType}}" ng-model="b[f.field]" data-uime-converter="f.converter" /></td>
 					</tr>
 				</tbody>
 			</table>
 		</script>
 		
 		<script id="EditGroupedBindings" type="text/html">
-			<table>
+			<table class="bindings grouped-bindings">
 				<thead>
 					<tr>
 						<th>Id</th>
@@ -76,7 +87,7 @@
 					<tr ng-repeat="b in bindings track by $index">
 						<td><input type="text" ng-model="b.m_Name" /></td>
 						<td><input type="text" ng-model="b.descriptiveName" /></td>
-						<td>
+						<td class="axis-or-button-binding">
 							<select ng-model="b.type" ng-options="inputTypeNames[t] for t in inputTypeIds" data-uime-converter="{ model: 'number' }"></select>
 							
 							<input ng-if="b.type == 2" type="number" min="0" ng-model="b.axis" />

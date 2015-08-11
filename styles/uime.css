@@ -1,0 +1,134 @@
+body {
+	margin: 20px 0;
+	font-family: sans-serif;
+}
+
+.page-content {
+	width: 1200px;
+	margin: auto;
+}
+
+/* Theme */
+header h1 {
+	margin: 0;
+	display: inline-block;
+}
+
+header .import-export-header {
+	float: right;
+}
+
+	header .import-export-header button {
+		font-size: 1.2em;
+	    padding: 10px 20px;
+	    text-transform: uppercase;
+		margin-left: 20px;
+		margin-top: -.2em;
+	
+		cursor: pointer;
+	    background-color: #EEE;
+	    border: 2px solid #999;
+		color: #444;
+	    box-shadow: rgba(0,0,0,.1) 2px 2px 2px;
+	}    
+		
+		header .import-export-header button:hover,
+		header .import-export-header button:active {
+			color: black;
+			border-color: #666;
+		}
+		
+		header .import-export-header button:active {
+			background-color: #DDD;
+			box-shadow: rgba(0,0,0,.3) 2px 2px 2px inset;
+		}
+
+.tab-bar {
+	margin-top: 20px;
+	
+	border-bottom: 1px solid #999;
+}
+
+	.tab-bar::after {
+		content: ' ';
+		display: table;
+		clear: both;	
+	}
+
+	.tab-bar .tab-button {
+	    padding: 5px 20px;
+	    float: left;
+		
+	    /* Collapse border to prevent double lining */
+	    margin-left: -1px;
+	    margin-bottom: -1px;
+		
+		cursor: pointer;
+		border: 1px solid #999;
+		color: #666;
+		background: #EEE;
+		
+	    box-shadow: rgba(0,0,0,.4) 0px -25px 40px -30px inset;
+	}
+	
+		.tab-bar .tab-button:hover {
+			color: black;
+			background: #EEF;
+		}
+		
+		.tab-bar .tab-button.tab-active {
+			background: white;
+			border-bottom-color: white;
+			color: black;
+			
+			box-shadow: none;
+		}
+
+		.tab-bar .tab-button.tab-special {
+			float: right;
+		}
+		
+.bindings {
+	border-collapse: collapse;
+	width: 100%;
+	
+	margin-top: 20px;
+}
+
+	.bindings th {
+	    background-color: #EEE;
+	    border: 1px solid #ccc;
+	    padding: 10px 20px;
+	}
+
+	.bindings td {
+		border: 1px solid #ccc;
+		padding: 0;
+	}
+	
+		.bindings td input[type=text],
+		.bindings td input[type=number],
+		.bindings td select {
+			border: none;
+    		padding: 5px 11px;
+			
+			width: 100%;
+			box-sizing: border-box;
+		}
+		
+		.bindings td input[type=checkbox] {
+		    margin: 0;
+		    width: 100%;
+		    height: 1.5em;
+		    display: block;
+		}
+		
+.grouped-bindings .axis-or-button-binding select {
+	width: 30%;
+	background: #f3f3f3;
+}
+
+.grouped-bindings .axis-or-button-binding input[type=text],
+.grouped-bindings .axis-or-button-binding input[type=number] {
+	width: 69%;	
+}
