@@ -59,18 +59,26 @@
 
 		<!-- Embeded views -->
 		<script id="EditRawBindings" type="text/html">
-			<table class="bindings">
+			<table class="bindings" ng-class="{ 'sort-default': sortOrder === 1, 'sort-reverse': sortOrder === -1 }">
 				<thead>
 					<tr>
-						<th ng-repeat="f in fields" ng-bind="f.name"></th>
+						<th ng-repeat="f in fields" ng-bind="f.name" ng-click="sort(f.field)" ng-class="{ 'sort-field': f.field === sortField }"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="b in bindings track by $index">
-						<td class="cell-{{f.fieldType}}" ng-repeat="f in fields"><input type="{{f.fieldType}}" ng-model="b[f.field]" data-uime-converter="f.converter" /></td>
+						<td class="cell-{{f.fieldType}}" ng-repeat="f in fields">
+							<button class="remove-binding" ng-click="removeBinding(b)" ng-if="$index == 0">X</button>
+							
+							<input type="{{f.fieldType}}" ng-model="b[f.field]" data-uime-converter="f.converter" />
+						</td>
 					</tr>
 				</tbody>
 			</table>
+						
+			<button ng-click="addBindings(1)" class="add-binding">+</button>
+			<button ng-click="addBindings(4)" class="add-binding">+4</button>
+			<!--<button class="add-binding">+S</button>-->
 		</script>
 		
 		<script id="EditGroupedBindings" type="text/html">
@@ -85,13 +93,18 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="b in bindings track by $index">
-						<td><input type="text" ng-model="b.m_Name" /></td>
+						<td>
+							<button class="remove-binding" ng-click="removeBinding(b)">X</button>
+							
+							<input type="text" ng-model="b.m_Name" />
+						</td>
 						<td><input type="text" ng-model="b.descriptiveName" /></td>
 						<td class="axis-or-button-binding">
 							<select ng-model="b.type" ng-options="inputTypeNames[t] for t in inputTypeIds" data-uime-converter="{ model: 'number' }"></select>
 							
 							<input ng-if="b.type == 2" type="number" min="0" ng-model="b.axis" />
-							<input ng-if="b.type != 2" type="text" ng-model="b.positiveButton" />
+							<input ng-if="b.type == 1" type="text" ng-model="b.positiveButton" />
+							<input ng-if="b.type == 0" type="text" ng-model="b.axis" />
 						</td>
 						<td>
 							<input type="checkbox" ng-model="b.invert"  data-uime-converter="{ model: 'binary', binding: 'boolean' }"/>
@@ -99,6 +112,10 @@
 					</tr>
 				</tbody>
 			</table>
+			
+			<button ng-click="addBindings(1)" class="add-binding">+</button>
+			<button ng-click="addBindings(4)" class="add-binding">+4</button>
+			<!--<button class="add-binding">+S</button>-->
 		</script>
 	</body>
 </html>

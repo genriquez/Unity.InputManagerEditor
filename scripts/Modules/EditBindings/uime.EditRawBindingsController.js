@@ -9,16 +9,43 @@
 	}
 	
 	UIME.controller("EditRawBindingsController", ["$scope", "$attrs", "controllerBindings", function ($scope, $attrs, controllerBindings) {
+		$scope.sortField = null;
+		$scope.sortOrder = 1; /* 1 default, -1 reverse */
+		
 		$scope.bindings = [];
 		$scope.fields = [
 			new BindingField("m_Name", "Id", "text"),
 			new BindingField("descriptiveName", "Name", "text"),
-			new BindingField("positiveButton", "Button", "text"),
-			new BindingField("invert", "Invert", "checkbox", "binary", "boolean"),
+			new BindingField("joyNum", "Joy #", "number"),
 			new BindingField("type", "Type", "number"),
 			new BindingField("axis", "Axis #", "number"),
-			new BindingField("joyNum", "Joystick #", "number")
+			new BindingField("invert", "Invert", "checkbox", "binary", "boolean"),
+			new BindingField("positiveButton", "Button", "text"),
+			new BindingField("gravity", "Gravity", "number"),
+			new BindingField("dead", "Deadzone", "number"),
+			new BindingField("sensitivity", "Sensitivity", "number")
 		];
+		
+		$scope.sort = function (field) {
+			if (field === $scope.sortField) {
+				$scope.sortOrder *= -1;
+			} else {
+				$scope.sortField = field;
+				$scope.sortOrder = 1;
+			}
+			
+			controllerBindings.sortBindings($scope.sortField, $scope.sortOrder === -1);
+		};
+		
+		$scope.removeBinding = function (binding) {
+			controllerBindings.removeBinding(binding);
+		};
+		
+		$scope.addBindings = function (count) {
+			for (var i = 0; i < count; i++) {
+				controllerBindings.addBinding();
+			}
+		};
 		
 		$scope.$on(controllerBindings.RefreshBindingsEvent, loadBindings);
 		

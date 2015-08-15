@@ -99,7 +99,33 @@ header .import-export-header {
 	    background-color: #EEE;
 	    border: 1px solid #ccc;
 	    padding: 10px 20px;
+		
+		cursor: pointer;
+		
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
+	
+		.bindings th.sort-field:before {
+			position: absolute;
+			margin-left: -15px;
+		}
+	
+	.bindings.sort-default th {
+		position: relative;
+	}
+
+		.bindings.sort-reverse th.sort-field:before {
+			content: "\2193";
+		}
+
+		.bindings.sort-default th.sort-field:before {
+			content: "\2191";
+		}
 
 	.bindings td {
 		border: 1px solid #ccc;
@@ -123,12 +149,68 @@ header .import-export-header {
 		    display: block;
 		}
 		
+		.bindings td.cell-number {
+			width: 90px;
+		}
+		
+	.bindings tr td .remove-binding {
+		display: none;
+		
+		position: absolute;
+		margin-left: -30px;
+		margin-top: -2px;
+	
+		width: 30px;
+		height: 29px;
+		
+		cursor: pointer;
+		background: #CCC;
+		border: 1px solid #999;
+		color: white;
+		font-weight: bold;
+		
+		
+	}
+		.bindings tr td .remove-binding:focus {
+			outline: none;
+		}
+	
+		.bindings tr td .remove-binding:hover {
+			background: #F44;
+			border: 1px solid #A22;
+			color: white;
+		}
+			
+		.bindings tr td .remove-binding:active {
+			background: #A22;
+			border: 1px solid #900;
+			color: white;
+		}
+		
+		.bindings tr:hover td .remove-binding {
+			display: inline-block;
+		}
+		
 .grouped-bindings .axis-or-button-binding select {
 	width: 30%;
 	background: #f3f3f3;
+	float: left;
 }
 
 .grouped-bindings .axis-or-button-binding input[type=text],
 .grouped-bindings .axis-or-button-binding input[type=number] {
-	width: 69%;	
+	width: 70%;	
+}
+
+button.add-binding {
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+
+    margin-right: 10px;
+    margin-top: 10px;
+
+    background-color: #CCC;
+    border: 2px solid #999;
+    color: white;
 }
