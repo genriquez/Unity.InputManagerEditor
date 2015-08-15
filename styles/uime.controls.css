@@ -96,6 +96,11 @@
 			background: #EEF;
 		}
 		
+		.tab-bar .tab-button:focus {
+			outline: none;
+			text-decoration: underline;
+		}
+		
 		.tab-bar .tab-button.tab-active {
 			background: white;
 			border-bottom-color: white;

@@ -20,12 +20,12 @@
 		<div data-ng-controller="TabsController" data-default-tab="Raw">
 			<div class="tab-bar">
 				<div class="page-content">
-					<a class="tab-button" data-ng-click="switchTab('Controller1')" data-ng-class="{ 'tab-active': currentTab == 'Controller1' }">Controller 1</a>
-					<a class="tab-button" data-ng-click="switchTab('Controller2')" data-ng-class="{ 'tab-active': currentTab == 'Controller2' }">Controller 2</a>
-					<a class="tab-button" data-ng-click="switchTab('Controller3')" data-ng-class="{ 'tab-active': currentTab == 'Controller3' }">Controller 3</a>
-					<a class="tab-button" data-ng-click="switchTab('Controller4')" data-ng-class="{ 'tab-active': currentTab == 'Controller4' }">Controller 4</a>
-					<a class="tab-button" data-ng-click="switchTab('Other')" data-ng-class="{ 'tab-active': currentTab == 'Other' }">Other</a>
-					<a class="tab-button tab-special" data-ng-click="switchTab('Raw')" data-ng-class="{ 'tab-active': currentTab == 'Raw' }">Raw</a>
+					<button class="tab-button" data-ng-click="switchTab('Controller1')" data-ng-class="{ 'tab-active': currentTab == 'Controller1' }" ng-disabled="currentTab == 'Controller1'">Controller 1</a>
+					<button class="tab-button" data-ng-click="switchTab('Controller2')" data-ng-class="{ 'tab-active': currentTab == 'Controller2' }" ng-disabled="currentTab == 'Controller2'">Controller 2</a>
+					<button class="tab-button" data-ng-click="switchTab('Controller3')" data-ng-class="{ 'tab-active': currentTab == 'Controller3' }" ng-disabled="currentTab == 'Controller3'">Controller 3</a>
+					<button class="tab-button" data-ng-click="switchTab('Controller4')" data-ng-class="{ 'tab-active': currentTab == 'Controller4' }" ng-disabled="currentTab == 'Controller4'">Controller 4</a>
+					<button class="tab-button" data-ng-click="switchTab('Other')" data-ng-class="{ 'tab-active': currentTab == 'Other' }">Other</a>
+					<button class="tab-button tab-special" data-ng-click="switchTab('Raw')" data-ng-class="{ 'tab-active': currentTab == 'Raw' }" ng-disabled="currentTab == 'Raw'">Raw</a>
 				</div>
 			</div>
 			
