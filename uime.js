@@ -8,9 +8,11 @@
 	loadDirective("OpenFile");
 	loadDirective("EmbedView");
 	loadDirective("Converters");
+	loadDirective("Dialog");	
 	
 	// Services
-	loadService("YamlConverter");
+	loadService("BindingsFileConverter");
+	loadService("BindingsGenerator");
 	loadService("ControllerBindings");
 	
 	// Controllers
@@ -20,6 +22,7 @@
 	loadModuleComponent("ImportExportBindings", "ImportExportBindingsController");
 	loadModuleComponent("EditBindings", "EditRawBindingsController");
 	loadModuleComponent("EditBindings", "EditGroupedBindingsController");
+	loadModuleComponent("EditBindings", "ScriptAddBindingsController");
 	
 	// Load functions
 	function loadModuleComponent(moduleName, componentName) {

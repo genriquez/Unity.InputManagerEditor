@@ -41,10 +41,16 @@
     }
     
     BindingGenerator.createEmptyBinding = function () {
-        return Object.create(emptyBinding);
+        var binding = {};
+        
+        for (var property in emptyBinding) {
+            binding[property] = emptyBinding[property];    
+        }
+        
+        return binding;
     };
     
-    BindingGenerator.prototype.ForJoyRange = function (from, to) {
+    BindingGenerator.prototype.WithJoyRange = function (from, to) {
         from = from === undefined ? 1 : from;
         to = to === undefined ? 4 : to;
         
@@ -67,7 +73,7 @@
         return this;
     };
     
-    BindingGenerator.prototype.ForButtonRange = function (from, to) {
+    BindingGenerator.prototype.WithButtonRange = function (from, to) {
         from = from || 0;
         to = to || 0;
         
@@ -91,7 +97,7 @@
     };
     
     
-    BindingGenerator.prototype.ForAxisRange = function (from, to) {
+    BindingGenerator.prototype.WithAxisRange = function (from, to) {
         from = from || 0;
         to = to || 0;
         
@@ -112,65 +118,55 @@
         return this;
     };
     
-    BindingGenerator.prototype.WithPropertyValue = function (property, value){
+    BindingGenerator.prototype.SetPropertyValue = function (property, value){
         this.steps.push(function (baseBindings) {
-            var bindings = [];
-        
-            for (var j = 0; j < baseBindings.length; j++) {
-                var binding = Object.create(baseBindings[j]);
+            baseBindings.forEach(function (binding) {
                 binding[property] = value;
-        
-                bindings.push(binding);
-            }
-        
-            return bindings;
+            });
+            
+            return baseBindings;
         });
         
         return this;
     };
     
-    BindingGenerator.prototype.WithPropertyTemplate = function (property, template) {
+    BindingGenerator.prototype.SetPropertyTemplate = function (property, template) {
         this.steps.push(function (baseBindings) {
-            var bindings = [];
-        
-            for (var j = 0; j < baseBindings.length; j++) {
-                var binding = Object.create(baseBindings[j]);
+            baseBindings.forEach(function (binding) {
                 binding[property] = parseTemplate(template, binding);
+            });
         
-                bindings.push(binding);
-            }
-        
-            return bindings;
+            return baseBindings;
         });
         
         return this;
     };
     
-    BindingGenerator.prototype.WithName = function (template) {
-        return this.WithPropertyTemplate("m_Name", template);
+    BindingGenerator.prototype.SetName = function (template) {
+        return this.SetPropertyTemplate("m_Name", template);
     };
     
-    BindingGenerator.prototype.WithDescriptiveName = function (template) {
-        return this.WithPropertyTemplate("descriptiveName", template);
+    BindingGenerator.prototype.SetDescriptiveName = function (template) {
+        return this.SetPropertyTemplate("descriptiveName", template);
     };
     
-    BindingGenerator.prototype.WithGravity = function (value) {
-        return this.WithPropertyValue("gravity", parseInt(value));
+    BindingGenerator.prototype.SetGravity = function (value) {
+        return this.SetPropertyValue("gravity", parseInt(value));
     };
     
-    BindingGenerator.prototype.WithDeadzone = function (value) { 
-        return this.WithPropertyValue("dead", parseFloat(value));
+    BindingGenerator.prototype.SetDeadzone = function (value) { 
+        return this.SetPropertyValue("dead", parseFloat(value));
     };
     
-    BindingGenerator.prototype.WithSensitivity = function (value) { 
-        return this.WithPropertyValue("sensitivity", parseFloat(value));
+    BindingGenerator.prototype.SetSensitivity = function (value) { 
+        return this.SetPropertyValue("sensitivity", parseFloat(value));
     };
     
-    BindingGenerator.prototype.WithInverted = function (value) {
-        return this.WithPropertyValue("invert", parseInt(value));  
+    BindingGenerator.prototype.SetInverted = function (value) {
+        return this.SetPropertyValue("invert", parseInt(value));  
     };
     
-    BindingGenerator.prototype.Conditional = function (predicate) {
+    BindingGenerator.prototype.OnlyIf = function (predicate) {
         var lastStep = this.steps.splice(this.steps.length - 1, 1)[0];
         
         this.steps.push(function (baseBindings) {
@@ -190,28 +186,28 @@
         return this;
     };  
     
-    BindingGenerator.prototype.ConditionalMatch = function (property, value) {
+    BindingGenerator.prototype.OnlyIfMatch = function (property, value) {
         var values = value instanceof Array ? value : [value];
     
-        return this.Conditional(function (binding) {
+        return this.OnlyIf(function (binding) {
             return values.indexOf(binding[property]) >= 0;
         });
     };
     
-    BindingGenerator.prototype.ConditionalOdd = function (property) {
-        return this.Conditional(function (binding) {
+    BindingGenerator.prototype.OnlyIfOdd = function (property) {
+        return this.OnlyIf(function (binding) {
             return binding[property] % 2 === 1;
         });
     };
     
-    BindingGenerator.prototype.ConditionalEven = function (property) {
-        return this.Conditional(function (binding) {
+    BindingGenerator.prototype.OnlyIfEven = function (property) {
+        return this.OnlyIf(function (binding) {
             return binding[property] % 2 === 0;
         });
     };
     
-    BindingGenerator.prototype.ConditionalBetween = function (property, from, to) {
-        return this.Conditional(function (binding) {
+    BindingGenerator.prototype.OnlyIfBetween = function (property, from, to) {
+        return this.OnlyIf(function (binding) {
             return binding[property] <= to && binding[property] >= from;
         });
     };
@@ -230,19 +226,10 @@
         });
         
         this.steps = [];
-        
-        var self = this;
-        bindings.forEach(function (binding) {
-            var flattenedBinding = {};
-            for (var property in emptyBinding) {
-                flattenedBinding[property] = binding[property];
-            }
-            
-            self.generatedBindings.push(flattenedBinding);
-        });
+        this.generatedBindings = this.generatedBindings.concat(bindings);
     };
     
-    UIME.service("bindingGenerator", function() {
+    UIME.service("bindingsGenerator", function() {
         return {
             parse: function (script) {
                 var evaluator = new Function('generator', script);

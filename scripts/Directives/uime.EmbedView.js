@@ -1,5 +1,5 @@
 /// <reference path="../uime.app.js" />
-(function (UIME) {
+(function (UIME, document) {
 	"use strict";
 	
 	UIME.directive("uimeEmbedView", ["$compile", function ($compile) {

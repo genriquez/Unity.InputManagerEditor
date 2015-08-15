@@ -56,7 +56,6 @@
 			</div>
 		</div>
 
-
 		<!-- Embeded views -->
 		<script id="EditRawBindings" type="text/html">
 			<table class="bindings" ng-class="{ 'sort-default': sortOrder === 1, 'sort-reverse': sortOrder === -1 }">
@@ -79,8 +78,10 @@
 			<div class="add-bindings-bar">		
 				<button ng-click="addBindings(1)" class="btn btn-soft btn-soft-green">+</button>
 				<button ng-click="addBindings(4)" class="btn btn-soft btn-soft-green">+4</button>
-				<!--<button class="add-binding">+S</button>-->
+				<button ng-click="showScriptDialog = true" class="btn btn-soft btn-soft-green">+S</button>
 			</div>
+			
+			<uime-dialog view-name="#ScriptAddDialog" visible="showScriptDialog" width="500px" height="300px"></uime-dialog>
 		</script>
 		
 		<script id="EditGroupedBindings" type="text/html">
@@ -118,7 +119,18 @@
 			<div class="add-bindings-bar">		
 				<button ng-click="addBindings(1)" class="btn btn-soft btn-soft-green">+</button>
 				<button ng-click="addBindings(4)" class="btn btn-soft btn-soft-green">+4</button>
-				<!--<button class="add-binding">+S</button>-->
+				<button ng-click="showScriptDialog = true" class="btn btn-soft btn-soft-green">+S</button>
+			</div>
+
+			<uime-dialog view-name="#ScriptAddDialog" visible="showScriptDialog" width="500px" height="300px"></uime-dialog>
+		</script>
+		
+		<script id="ScriptAddDialog" type="text/html">
+			<div ng-controller="ScriptAddBindingsController">
+				<label>Script:</label>
+				<textarea ng-model="script"></textarea>
+			
+				<button ng-click="generate()">Generate</button>
 			</div>
 		</script>
 	</body>

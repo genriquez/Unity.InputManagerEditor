@@ -6,7 +6,6 @@
 		
 	text-transform: uppercase;
 	margin-left: 20px;
-	margin-top: -.2em;
 	padding: 0;
 
 	cursor: pointer;
@@ -111,4 +110,48 @@
 
 		.tab-bar .tab-button.tab-special {
 			float: right;
+		}
+		
+/* Dialog styles */
+.uime-dialog-backdrop {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    
+	background-color: rgba(0,0,0,.3);
+}
+
+	.uime-dialog-backdrop .uime-dialog {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+		
+		.uime-dialog-backdrop .uime-dialog .uime-dialog-contents {
+			width: inherit;
+			height: inherit;
+			
+			box-sizing: border-box;
+			
+			position: absolute;
+			top: -50%;
+			left: -50%;
+			
+			padding: 5px;
+			background-color: #FAFAFA;
+			border: 2px solid #CCC;
+		}
+		
+		.uime-dialog-backdrop .uime-dialog .uime-dialog-close {
+			position: absolute;
+			top: -50%;
+			right: 50%;
+			
+			margin: 10px;
+			height: 25px;
+			width: 25px;
+			
+			font-size: 14px;
+			box-shadow: none;
+			border-width: 1px;
 		}

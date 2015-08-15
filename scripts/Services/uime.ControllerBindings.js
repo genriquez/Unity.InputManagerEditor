@@ -4,26 +4,9 @@
 	// Bindings object is shared across all service instances
 	var bindings = null;
 	
-	var defaultBindingValues = {
-		serializedVersion: 3,
-      	m_Name: null,
-      	descriptiveName: null,
-      	descriptiveNegativeName: null,
-      	negativeButton: null,
-      	positiveButton: null,
-      	altNegativeButton: null,
-      	altPositiveButton: null,
-      	gravity: 0,
-      	dead: 0,
-      	sensitivity: 1,
-      	snap: 0,
-      	invert: 0,
-      	'type': 2,
-      	axis: 0,
-      	joyNum: 0
-	};
-	
-	UIME.service("controllerBindings", ["$rootScope", function ($rootScope) {
+	UIME.service("controllerBindings", ["$rootScope", "bindingsGenerator", "bindingsFileConverter", function ($rootScope, bindingGenerator, bindingsFileConverter) {
+		bindings = bindingsFileConverter.createEmpty();
+		
 		var self = {
 			RefreshBindingsEvent: "controllerBindingsRefresh",
 			
@@ -64,12 +47,13 @@
 			
 			addBinding: function (initialValues) {
 				// Create a copy of the binding default values
-				var binding = Object.create(defaultBindingValues);
+				var emptyBinding = bindingGenerator.createEmptyBinding();
+				var binding = Object.create(emptyBinding);
 				
 				// copy any mathcing initial values to the new binding
 				if (initialValues) {
 					for (var property in initialValues) {
-						if (defaultBindingValues.hasOwnProperty(property)) {
+						if (emptyBinding.hasOwnProperty(property)) {
 							binding[property] = initialValues[property];
 						}		
 					}
@@ -77,6 +61,12 @@
 				
 				bindings.parsedObject.InputManager.m_Axes.push(binding);
 				$rootScope.$broadcast(self.RefreshBindingsEvent);
+			},
+			
+			addBindings: function (bindings) {
+				bindings.forEach(function (binding) {
+					self.addBinding(binding);	
+				});
 			}
 		};
 		
