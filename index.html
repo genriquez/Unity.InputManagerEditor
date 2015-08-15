@@ -12,7 +12,7 @@
 			<h1>INPUT MANAGER EDITOR</h1>
 			
 			<div class="import-export-header" data-ng-controller="ImportExportBindingsController">
-				<button ng-click="exportBindings()">Export</button>
+				<button class="btn" ng-click="exportBindings()">Export</button>
 				<uime-open-file caption="Import" onload="onSourceLoad"></uime-open-file>
 			</div>
 		</header>
@@ -68,17 +68,19 @@
 				<tbody>
 					<tr ng-repeat="b in bindings track by $index">
 						<td class="cell-{{f.fieldType}}" ng-repeat="f in fields">
-							<button class="remove-binding" ng-click="removeBinding(b)" ng-if="$index == 0">X</button>
+							<button class="btn btn-soft btn-soft-red remove-binding" ng-click="removeBinding(b)" ng-if="$index == 0">X</button>
 							
 							<input type="{{f.fieldType}}" ng-model="b[f.field]" data-uime-converter="f.converter" />
 						</td>
 					</tr>
 				</tbody>
 			</table>
-						
-			<button ng-click="addBindings(1)" class="add-binding">+</button>
-			<button ng-click="addBindings(4)" class="add-binding">+4</button>
-			<!--<button class="add-binding">+S</button>-->
+				
+			<div class="add-bindings-bar">		
+				<button ng-click="addBindings(1)" class="btn btn-soft btn-soft-green">+</button>
+				<button ng-click="addBindings(4)" class="btn btn-soft btn-soft-green">+4</button>
+				<!--<button class="add-binding">+S</button>-->
+			</div>
 		</script>
 		
 		<script id="EditGroupedBindings" type="text/html">
@@ -94,7 +96,7 @@
 				<tbody>
 					<tr ng-repeat="b in bindings track by $index">
 						<td>
-							<button class="remove-binding" ng-click="removeBinding(b)">X</button>
+							<button class="btn btn-soft btn-soft-red remove-binding" ng-click="removeBinding(b)">X</button>
 							
 							<input type="text" ng-model="b.m_Name" />
 						</td>
@@ -113,9 +115,11 @@
 				</tbody>
 			</table>
 			
-			<button ng-click="addBindings(1)" class="add-binding">+</button>
-			<button ng-click="addBindings(4)" class="add-binding">+4</button>
-			<!--<button class="add-binding">+S</button>-->
+			<div class="add-bindings-bar">		
+				<button ng-click="addBindings(1)" class="btn btn-soft btn-soft-green">+</button>
+				<button ng-click="addBindings(4)" class="btn btn-soft btn-soft-green">+4</button>
+				<!--<button class="add-binding">+S</button>-->
+			</div>
 		</script>
 	</body>
 </html>

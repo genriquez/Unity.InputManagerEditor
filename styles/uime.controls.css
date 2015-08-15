@@ -1,0 +1,109 @@
+/* Button styles */
+.btn {
+	font-size: 20px;
+	height: 45px;
+	vertical-align: top;
+		
+	text-transform: uppercase;
+	margin-left: 20px;
+	margin-top: -.2em;
+	padding: 0;
+
+	cursor: pointer;
+	background-color: #EEE;
+	border: 2px solid #999;
+	color: #444;
+	box-shadow: rgba(0,0,0,.1) 2px 2px 2px;
+}    
+
+	.btn:focus {
+		outline: none;
+		box-shadow: rgba(0,0,0,.4) 2px 2px 4px;
+	}
+		
+	.btn:hover,
+	.btn:active {
+		color: black;
+		border-color: #666;
+	}
+		
+	.btn:active {
+		background-color: #DDD;
+		box-shadow: rgba(0,0,0,.3) 2px 2px 2px inset;
+		
+		padding-top: .1em;
+		text-indent: .1em;
+	}
+	
+.btn.btn-soft {
+	background-color: #DDD;
+	color: white;	
+}
+
+	.btn.btn-soft-green:hover,
+	.btn.btn-soft-green:active {
+		color: white;
+		background-color: #6B6;
+		border-color: #181;
+	}
+		
+	.btn.btn-soft-green:active {
+		background-color: #4A4;
+	}
+	
+	.btn.btn-soft-red:hover,
+	.btn.btn-soft-red:active {
+		color: white;
+		background-color: #F66;
+		border-color: #A22;
+	}
+		
+	.btn.btn-soft-red:active {
+		background-color: #D44;
+	}
+	
+/* Tabbar styles */
+.tab-bar {
+	margin-top: 20px;
+	
+	border-bottom: 1px solid #999;
+}
+
+	.tab-bar::after {
+		content: ' ';
+		display: table;
+		clear: both;	
+	}
+
+	.tab-bar .tab-button {
+	    padding: 5px 20px;
+	    float: left;
+		
+	    /* Collapse border to prevent double lining */
+	    margin-left: -1px;
+	    margin-bottom: -1px;
+		
+		cursor: pointer;
+		border: 1px solid #999;
+		color: #666;
+		background: #EEE;
+		
+	    box-shadow: rgba(0,0,0,.4) 0px -25px 40px -30px inset;
+	}
+	
+		.tab-bar .tab-button:hover {
+			color: black;
+			background: #EEF;
+		}
+		
+		.tab-bar .tab-button.tab-active {
+			background: white;
+			border-bottom-color: white;
+			color: black;
+			
+			box-shadow: none;
+		}
+
+		.tab-bar .tab-button.tab-special {
+			float: right;
+		}
