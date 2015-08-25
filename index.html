@@ -81,7 +81,7 @@
 				<button ng-click="showScriptDialog = true" class="btn btn-soft btn-soft-green">+S</button>
 			</div>
 			
-			<uime-dialog view-name="#ScriptAddDialog" visible="showScriptDialog" width="500px" height="300px"></uime-dialog>
+			<uime-dialog view-name="#ScriptAddDialog" visible="showScriptDialog" width="700px" height="400px"></uime-dialog>
 		</script>
 		
 		<script id="EditGroupedBindings" type="text/html">
@@ -122,16 +122,130 @@
 				<button ng-click="showScriptDialog = true" class="btn btn-soft btn-soft-green">+S</button>
 			</div>
 
-			<uime-dialog view-name="#ScriptAddDialog" visible="showScriptDialog" width="500px" height="300px"></uime-dialog>
+			<uime-dialog view-name="#ScriptAddDialog" visible="showScriptDialog" width="700px" height="400px"></uime-dialog>
 		</script>
 		
 		<script id="ScriptAddDialog" type="text/html">
-			<div ng-controller="ScriptAddBindingsController">
-				<label>Script:</label>
-				<textarea ng-model="script"></textarea>
-			
-				<button ng-click="generate()">Generate</button>
-			</div>
+			<div data-ng-controller="TabsController" data-default-tab="ScriptEditor" class="generate-bindings-dialog">
+				<span>Bindings generator</span>
+				
+				<div class="tab-bar">
+					<div class="page-content">
+						<button class="tab-button" data-ng-click="switchTab('ScriptEditor')" data-ng-class="{ 'tab-active': currentTab == 'ScriptEditor' }" ng-disabled="currentTab == 'ScriptEditor'">Editor</a>
+						<button class="tab-button" data-ng-click="switchTab('ScriptReference')" data-ng-class="{ 'tab-active': currentTab == 'ScriptReference' }" ng-disabled="currentTab == 'ScriptReference'">Reference</a>
+					</div>
+				</div>
+				
+				<div data-ng-show="currentTab === 'ScriptEditor'">
+					<div ng-controller="ScriptAddBindingsController">
+						<textarea ng-model="script"></textarea>
+						<button class="btn btn-generate" ng-click="generate()">Generate</button>
+					</div>
+				</div>
+				
+				<div data-ng-show="currentTab === 'ScriptReference'" class="script-reference">
+					<p>
+						The bindings generator uses a script or recipe to generate 1 or more joystick bindings. 
+						The script is javascript code that uses the generator object to configure batch generation
+						of the bindings. A <i>generation clause</i> starts with the <code>generator</code> object,
+						followed by several method invocations in fluent sintax, and ends with a <code>Generate()</code>
+						invocation. Multiple clauses can be contained in the same script.
+					</p> 
+					
+					<p>
+						A default script is provided to generate bindings for Joysticks 1 through 4, for axis 1 through 5 and 
+						buttons 1 through 10 (total of 60 bindings).
+					</p>
+					
+					<span><b>Batch generation methods</b>: This methods allows batch creation of axis and button bindings for 
+					multiple joysticks.</span>
+					
+					<p>
+						<code>WithJoyRange(from, to)</code>: Generates a batch of empty bindings with joystick Ids (<code>joyNum</code>)
+						ranging from <code>from</code> to <code>to</code>. If omitted, <code>from</code> and <code>to</code> default
+						to <code>1</code> and <code>4</code> respectively.
+					</p>
+
+					<p>
+						<code>WithButtonRange(from, to)</code>: Transforms each binding generated on the last step, generating 
+						new copies of the binding with button Ids (<code>button</code>) ranging from <code>from</code> to <code>to</code>.
+					</p>
+					
+					<p>
+						<code>WithAxisRange(from, to)</code>: Transforms each binding generated on the last step, generating 
+						new copies of the binding with axis Ids (<code>axis</code>) ranging from <code>from</code> to <code>to</code>.
+					</p>
+
+					<span><b>Configuration methods</b>: This methods allow changing the settings for each binding. 
+					See <i>Conditional methods</i> to limit which bindings they affect.</span>
+					
+					<p>
+						<code>SetPropertyValue(property, value)</code>: Sets each binding's <code>property</code> to 
+						a given <code>value</code>. The property name must match a property as listed in the raw asset file.
+					</p>
+
+					<p>
+						<code>SetPropertyTemplate(property, value)</code>: Sets each binding's <code>property</code> to 
+						a value generated from the <code>template</code> with the bindings settings. The template can contain
+						placeholders, which are a property name between curly braces. For example, the template "Joystick {joyNum}" 
+						would yield a value of "Joystick 1" for binding with <code>joyNum = 1</code>, and "Joystick 3" for a
+						binding with <code>joyNum = 3</code>.
+					</p>
+
+					<p>
+						<code>SetName(template)</code>: Shortcut to <code>SetPropertyTemplate("m_Name", template)</code>.
+					</p>
+
+					<p>
+						<code>SetDescriptiveName(template)</code>: Shortcut to <code>SetPropertyTemplate("descriptiveName", template)</code>.
+					</p>
+
+					<p>
+						<code>SetGravity(value)</code>: Shortcut to <code>SetPropertyValue("gravity", value)</code>.
+					</p>
+
+					<p>
+						<code>SetDeadzone(value)</code>: Shortcut to <code>SetPropertyValue("dead", value)</code>.
+					</p>
+
+					<p>
+						<code>SetSensitivity(value)</code>: Shortcut to <code>SetPropertyValue("sensitivity", value)</code>.
+					</p>
+
+					<p>
+						<code>SetInverted(value)</code>: Shortcut to <code>SetPropertyValue("invert", value)</code>.
+					</p>
+
+					<span><b>Conditional methods</b>: This methods allow limiting when the last step should be applied. Conditional
+					methods can be chained to apply a more restrictive condition.</span>
+
+					<p>
+						<code>OnlyIfMatch(property, value)</code>: Restricts the execution of the last step only when the binding's 
+						<code>property</code> matches the given <code>value</code>.
+					</p>
+
+					<p>
+						<code>OnlyIfOdd(property)</code>: Restricts the execution of the last step only when the binding's 
+						<code>property</code> is an odd number.
+					</p>
+
+					<p>
+						<code>OnlyIfEven(property)</code>: Restricts the execution of the last step only when the binding's 
+						<code>property</code> is an even number.
+					</p>
+
+					<p>
+						<code>OnlyIfBetween(property, from, to)</code>: Restricts the execution of the last step only when the binding's 
+						<code>property</code> is between the given <code>from</code> and <code>to</code> values.
+					</p>
+					
+					<b>Other methods</b>
+					
+					<p>
+						<code>Remove()</code>: Removes a binding from the generated bindings collection. Must be used with a conditional method,
+						otherwise it would remove all of the generated bindings.
+					</p>
+				</div>
 		</script>
 	</body>
 </html>
