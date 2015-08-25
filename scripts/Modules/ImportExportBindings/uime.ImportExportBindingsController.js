@@ -3,7 +3,7 @@
 (function (UIME, context) {
 	"use strict";
 	
-	UIME.controller("ImportExportBindingsController", ["$scope", "yamlConverter", "controllerBindings", function ($scope, yamlConverter, controllerBindings) {
+	UIME.controller("ImportExportBindingsController", ["$scope", "bindingsFileConverter", "controllerBindings", function ($scope, yamlConverter, controllerBindings) {
 		$scope.source = "test";
 		
 		$scope.onSourceLoad = function (source) {

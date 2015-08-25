@@ -11,7 +11,7 @@
 				onLoad: "=onload"
 			},
 			
-			template: "<button></button><input type='file' style='display: none' />",
+			template: "<button class='btn'></button><input type='file' style='display: none' />",
 			
 			link: function link(scope, element, attrs) {
 				var input = element.find("input");

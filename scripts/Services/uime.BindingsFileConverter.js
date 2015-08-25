@@ -10,7 +10,7 @@
 		this.parsedObject = parsedObject;
 	}
 	
-	UIME.factory("yamlConverter", function () {
+	UIME.factory("bindingsFileConverter", function () {
 		return {
 			parse: function (yamlText) {
 				var lines = yamlText.split("\n"),
@@ -40,7 +40,19 @@
 				}
 				
 				var yamlText = jsyaml.dump(obj);
+				yamlText = yamlText.replace(/\:\snull/g, ": ");
+				
 				return header + yamlText;
+			},
+			
+			createEmpty: function () {
+				return new YamlConvertedObject("%YAML 1.1\n%TAG !u! tag:unity3d.com,2011:\n--- !u!13 &1\n", {
+					InputManager: {
+						m_ObjectHideFlags: 0,
+  						serializedVersion: 2,
+  						m_Axes: []
+					}
+				});
 			}
 		};
 	});

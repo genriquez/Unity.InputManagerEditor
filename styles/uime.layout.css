@@ -1,0 +1,15 @@
+body {
+	margin: 20px 0;
+	font-family: sans-serif;
+}
+
+.page-content {
+	width: 1200px;
+	margin: auto;
+}
+
+/* Theme */
+header h1 {
+	margin: 0;
+	display: inline-block;
+}
