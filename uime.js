@@ -14,6 +14,7 @@
 	loadService("BindingsFileConverter");
 	loadService("BindingsGenerator");
 	loadService("ControllerBindings");
+	loadService("FileDownload");
 	
 	// Controllers
 	loadController("TabsController");

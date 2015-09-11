@@ -3,7 +3,7 @@
 (function (UIME, context) {
 	"use strict";
 	
-	UIME.controller("ImportExportBindingsController", ["$scope", "bindingsFileConverter", "controllerBindings", function ($scope, yamlConverter, controllerBindings) {
+	UIME.controller("ImportExportBindingsController", ["$scope", "bindingsFileConverter", "controllerBindings", "fileDownload", function ($scope, yamlConverter, controllerBindings, fileDownload) {
 		$scope.source = "test";
 		
 		$scope.onSourceLoad = function (source) {
@@ -15,11 +15,7 @@
 			var bindings = controllerBindings.getRawBindings();
 			var yaml = yamlConverter.convert(bindings);
 			
-			// TODO: Remove from controller
-			var element = document.createElement("a");
-			element.download = "InputManager.asset";
-			element.href = "data:application/octet-stream;base64," + btoa(yaml);
-			element.click();
+			fileDownload.download(yaml, "InputManager.asset");
 		};
 	}]);
 }(UIME, this));
